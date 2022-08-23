@@ -1,6 +1,8 @@
 const ROCK = 'Rock';
 const PAPER = 'Paper';
 const SCISSORS = 'Scissors';
+let GAMES_WON_PC = 0;
+let GAMES_WON_USER = 0;
 
 function getComputerChoice() {
     let random_number = Math.floor(Math.random() * 3) + 1;
@@ -33,14 +35,17 @@ function playOneRound(playerSelection, computerSelection) {
 
     if (playerSelection == "Rock" && computerSelection == "Paper"){
         console.log("You lose!");
+        GAMES_WON_PC = GAMES_WON_PC + 1;
     };
     
     if (playerSelection == "Rock" && computerSelection == "Scissors"){
         console.log("You win!");
+        GAMES_WON_USER = GAMES_WON_USER + 1;
     };
 
     if (playerSelection == "Paper" && computerSelection == "Rock"){
         console.log("You win!");
+        GGAMES_WON_USER = GAMES_WON_USER + 1;
     };
 
     if (playerSelection == "Paper" && computerSelection == "Paper"){
@@ -49,14 +54,17 @@ function playOneRound(playerSelection, computerSelection) {
 
     if (playerSelection == "Paper" && computerSelection == "Scissors"){
         console.log("You lose!");
+        GAMES_WON_PC = GAMES_WON_PC + 1;
     };
 
     if (playerSelection == "Scissors" && computerSelection == "Rock"){
         console.log("You lose!");
+        GAMES_WON_PC = GAMES_WON_PC + 1;
     };
 
     if (playerSelection == "Scissors" && computerSelection == "Paper"){
         console.log("You win!");
+        GAMES_WON_USER = GAMES_WON_USER + 1;
     };
 
     if (playerSelection == "Scissors" && computerSelection == "Scissors"){
@@ -71,7 +79,7 @@ function playOneRound(playerSelection, computerSelection) {
 function game(number) {
     for (let index = 0; index < number; index++) {
         playOneRound(getPlayerChoice(), getComputerChoice());
-        
+        console.log("SCOREBOARD: \n Your score: " + GAMES_WON_USER + " Wins.\n Computer score: " + GAMES_WON_PC + " Wins.")   
     }
 }
 
