@@ -1,96 +1,87 @@
-const ROCK = 'Rock';
-const PAPER = 'Paper';
-const SCISSORS = 'Scissors';
-let GAMES_WON_PC = 0;
-let GAMES_WON_USER = 0;
+let buttonPressed = undefined;
+let randomChoice = undefined;
+const choices = ['Rock', 'Paper', 'Scissors'];
+const container = document.querySelector('result-container')
+const numberOfGames = document.querySelector('#numberOfGames');
+const playerWins = document.querySelector('#playerWins');
+const computerWins = document.querySelector('#computerWins');
 
-function getComputerChoice() {
-    let random_number = Math.floor(Math.random() * 3) + 1;
-
-    if(random_number == 1){
-        return ROCK;
-    };
-
-    if(random_number == 2){
-        return PAPER;
-    };
-
-    if(random_number == 3){
-        return SCISSORS;
-    };
-};
-
-function getPlayerChoice() {
-    let choice = prompt("Enter 'Rock', 'Paper' or 'Scissors':");
-    choice.toLowerCase();
-    return choice.charAt(0).toUpperCase() + choice.slice(1);
-};
-
-function playOneRound(playerSelection, computerSelection) {
-    
-
-    if (playerSelection == "Rock" && computerSelection == "Rock"){
-        console.log("Tie!");
-    };
-
-    if (playerSelection == "Rock" && computerSelection == "Paper"){
-        console.log("You lose!");
-        GAMES_WON_PC = GAMES_WON_PC + 1;
-    };
-    
-    if (playerSelection == "Rock" && computerSelection == "Scissors"){
-        console.log("You win!");
-        GAMES_WON_USER = GAMES_WON_USER + 1;
-    };
-
-    if (playerSelection == "Paper" && computerSelection == "Rock"){
-        console.log("You win!");
-        GGAMES_WON_USER = GAMES_WON_USER + 1;
-    };
-
-    if (playerSelection == "Paper" && computerSelection == "Paper"){
-        console.log("Tie!");
-    };
-
-    if (playerSelection == "Paper" && computerSelection == "Scissors"){
-        console.log("You lose!");
-        GAMES_WON_PC = GAMES_WON_PC + 1;
-    };
-
-    if (playerSelection == "Scissors" && computerSelection == "Rock"){
-        console.log("You lose!");
-        GAMES_WON_PC = GAMES_WON_PC + 1;
-    };
-
-    if (playerSelection == "Scissors" && computerSelection == "Paper"){
-        console.log("You win!");
-        GAMES_WON_USER = GAMES_WON_USER + 1;
-    };
-
-    if (playerSelection == "Scissors" && computerSelection == "Scissors"){
-        console.log("Tie!");
-    };
-
-    console.log('You chose: ' + playerSelection);
-    console.log('Computer chose: ' + computerSelection);
+const getButtonPressed = () => {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            buttonPressed = button.id.toString();
+            console.log(buttonPressed);
+            playOneRound(buttonPressed, getRandomChoice(3))
+        })
+    }, false);
 };
 
 
-function game(number) {
-    for (let index = 0; index < number; index++) {
-        playOneRound(getPlayerChoice(), getComputerChoice());
-        console.log("SCOREBOARD: \n Your score: " + GAMES_WON_USER + " Wins.\n Computer score: " + GAMES_WON_PC + " Wins.")   
+const getRandomChoice = (x) => {
+    randomChoice = choices[Math.floor(Math.random() * x)];
+    console.log(randomChoice);
+    return randomChoice;
+};
+
+
+const playOneRound = (getButtonPressed, getRandomChoice) => {
+    if (getButtonPressed === getRandomChoice){
+        numberOfGames.textContent++;
+        playerWins.textContent++;
+        computerWins.textContent++;
+    };
+    if (getButtonPressed === "Paper"){
+        if (getRandomChoice === "Scissors"){
+            computerWins.textContent++;
+            numberOfGames.textContent++;
+            
+        }
+        if (getRandomChoice === "Rock") {
+            playerWins.textContent++;
+            numberOfGames.textContent++;
+        }
     }
-}
+    if (getButtonPressed === "Scissors"){
+        if (getRandomChoice === "Rock"){
+            computerWins.textContent++;
+            numberOfGames.textContent++;
+        }
+        if (getRandomChoice === "Paper") {
+            playerWins.textContent++;
+            numberOfGames.textContent++;
+        }
+    }
+    if (getButtonPressed === "Rock"){
+        if (getRandomChoice === "Paper"){
+            computerWins.textContent++;
+            numberOfGames.textContent++;
+        }
+        if (getRandomChoice === "Scissors") {
+            playerWins.textContent++;
+            numberOfGames.textContent++;
+        }
+    }
 
-function main() {
-    let number_game = prompt('How many rounds would you like to play?');
-    console.log('Playing ' + number_game + ' games...');
-    game(number_game);
-}
+    if (getButtonPressed === "Reset"){
+        playerWins.textContent = '0';
+        computerWins.textContent = '0';
+        numberOfGames.textContent = '0';
+    }
 
-/* console.log(getComputerChoice());
-console.log(getComputerChoice());
-console.log(getPlayerChoice()); */
+    let gamesPlayed = numberOfGames.textContent;
+            if (gamesPlayed == "5"){
+                if (parseInt(computerWins.textContent) > parseInt(playerWins.textContent)){
+                    alert("You lose!")
+                }
+                if (parseInt(computerWins.textContent) < parseInt(playerWins.textContent)){
+                    alert("You win!")
+                }
+                if (parseInt(computerWins.textContent) == parseInt(playerWins.textContent)){
+                    alert("Tie!")
+                }
+            }
 
-main();
+};
+
+getButtonPressed();
